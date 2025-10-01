@@ -1,15 +1,16 @@
 #author: Madeleine Elias
 #date: 9/3/25
 #description: asks for name or word and tests it with functions
-#breaks: if they are any numbers or special characters, if they are less than three words or spaces,the frequency is off if there isn't three names, initials won't work if no middle name,
+#bugs: if they are any numbers or special characters, if they are less than three words or spaces,the frequency is off if there isn't three names, initials won't work if no middle name, if you have a title it will show up for initails and first name
 #challenges: makes random name from random letters, scrambles both first and full name
-#sources: old codes, w3school
+#sources: old codes, w3school, teachers
+#Log:1.0 initial release
 
 
 import random
 def count_vowels(name):
     '''
-    counts the vowels in the name and knows the totals of each vowel
+    Description: counts the vowels in the name and knows the totals of each vowel
     Args:
         name: the name that the user inputed 
     returns:
@@ -42,12 +43,13 @@ def count_vowels(name):
             count = count +1
         else:
             count = count + 0
+    #if code sees if there is a certain letter than adds to variable about that letter and the total
     message = f"A:{a} E:{e} I:{ilet} O:{o} U:{u} Y:{y} total:{count}"
     return message
 
 def reverse_display(name):
     '''
-    reverses the name and prints it
+    Description: reverses the name and prints it
     Args:
         name: the name the user inputed
     returns:
@@ -56,17 +58,18 @@ def reverse_display(name):
 
 def palindrome(name1):
     '''
-    check if the name is a palindrome and prints true or false depending on if it is uses function lower to turn the first name to lowercase
+    Description: check if the name is a palindrome and prints true or false depending on if it is uses function lower to turn the first name to lowercase
     Args:
         name1: the first name of the user after the  full name got put into the function first_name()
     returns:
-        true or false depending on the answer'''
+        true or false depending on if the name and the reverse of the name are the same'''
     name2 = lower(name1)
     revname = name2[::-1]
     print(name2 == revname)
 
 def count_consonant(name):
-    '''counts the number of consonants by using for loops subtracts every time there is a space because it should not count for total letters
+    '''
+    Description:counts the number of consonants by using for loops subtracts every time there is a space because it should not count for total letters
     Args:
         name: the name the user inputed
     returns:
@@ -82,12 +85,13 @@ def count_consonant(name):
             total = total -1
         else:
             count = count + 0
+    # if there are any consonants in name it will add 1 to the consonant count then at the end divide by the total letters in the name to get frequency
     frequency = count/total
     return frequency
 
 def first_name(name):
     '''
-    finds the first name/word in what user inputed by stoping where the space is
+    Description: finds the first name/word in what user inputed by stoping where the space is
     Args:
         name: the name the user inputed
     returns:
@@ -98,11 +102,12 @@ def first_name(name):
             break
         else:
             firname += i
+    # if the letter is a space loop will start and in the loop it was adding letters to empty string to get the first name
     return firname
 
 def last_name(name):
     '''
-    finds the last name by going backwards to find where the space is a turning it the right way again
+    Description: finds the last name by going backwards to find where the space is a turning it the right way again
     Args:
         name: the name the user inputed
     returns:
@@ -115,17 +120,18 @@ def last_name(name):
         else:
             lstnm += i
     rightnm = lstnm[::-1]
+    #turns the name backwards and does the same thing as the first name but then turning it back around at the end
     return rightnm
 
 def middle_name(name):
     '''
-    finds the middle names by counting the idex until getting to the first space and then counts backwards until getting to the last space to get the index and then the middle name is what is between them. numfor is the count going forward and numback is the count going back
+    Description: finds the middle names by counting the idex until getting to the first space and then counts backwards until getting to the last space to get the index and then the middle name is what is between them. numfor is the count going forward and numback is the count going back
     Args:
         name: the name the user inputed
     returns:
         the middle names'''
-    numfor = 0
-    numback = len(name)
+    numfor = 0                                 #numfor is the number of letters going forward
+    numback = len(name)                        #how many letters there is and will go back
     for i in name:
         if i == " ":
             break
@@ -137,27 +143,24 @@ def middle_name(name):
             break
         else:
             numback = numback - 1
-    nim = (name[numfor:numback])
+    nim = (name[numfor:numback])              #nim is the name from the indexs that numfor and numback say which is the first and last space
     return nim
     
 def hyphen(name3):
     '''
-    finds out if there is a hyphen in the last name using the function last_name
+    Description: finds out if there is a hyphen in the last name using the function last_name 
     Args:
         name3: last name of the user fron function last_name()
     returns:
         true or false depending if there is a hyphen in the last name'''
-    random = 0
     for i in name3:
         if i == "-":
             return True
-        else:
-            random = random +0
     return False
             
 def random_name():
     '''
-    function chooses a random length between 5-15 for the length of the name. then it joins random letters for that length to get a random name
+    Description: function chooses a random length between 5-15 for the length of the name. then it joins random letters for that length to get a random name
     Args:
         name: the name the user inputed
      returns:
@@ -167,7 +170,7 @@ def random_name():
 
 def initials(name1,name2,name3):
     '''
-    function finds initials by first using the outputs of functions first_name, middle_name, last_name then converting them to list and printing the first letter of each using index
+    Description: function finds initials by first using the outputs of functions first_name, middle_name, last_name then converting them to list and printing the first letter of each using index
     Args:
         name1: the first name of the user after it got put into the function first_name()
         name2: the middle name of the user after it got put into the function middle_name()
@@ -177,21 +180,22 @@ def initials(name1,name2,name3):
     first = list(name1)
     middle = list(name2)
     last = list(name3)
-    all = (first[0],middle[0],last[0])
+    all = (first[0],middle[0],last[0])                              #first index of every name which is the initals
     sep = ","
-    initials = sep.join(all)
+    initials = sep.join(all)                                      #turns the initials into a string
     return initials
 
 def lower(name):
     '''
-    function converts the letters to the octal value which is a letter to see if it is uppercase. If it is it adds 32 to convert it to its lowercase counterpart.
+    Description: function converts the letters to the octal value which is a letter to see if it is uppercase. If it is it adds 32 to convert it to its lowercase counterpart.
     Args:
         name: the name the user inputed
     returns:
         the name but will all characters as lowercase'''
     namout = ""
     for letter in name:
-        if ord(letter)>64 and ord(letter)<91:
+        #if the odinant of the letter from the ascii table is between 64-91 it is uppercase so for every letter it will add 32 to the ordinant than get that letter which is the lowercase and add it the empty string
+        if ord(letter)>64 and ord(letter)<91: 
             num = ord(letter)
             num = num+32
             letter = chr(num)
@@ -202,13 +206,14 @@ def lower(name):
 
 def upper(name):
     '''
-    function converts letters to octel value and tests if they are lowercase. if they are it subtracts 32 to convert it to uppercase equivelant.
+    Description: function converts letters to octel value and tests if they are lowercase. if they are it subtracts 32 to convert it to uppercase equivelant.
     Args:
         name: the name the user inputed
     returns:
         the name but with all characters as uppercase'''
     namout = ""
     for letter in name:
+        #if the ordinant of the letter from the ascii table is between 96-123 it is lowercase so it will subtract 32 from the ordinant, then adding that letter  which is the uppercase to the empty string
         if ord(letter)>96 and ord(letter)<123:
             num = ord(letter)
             num = num-32
@@ -220,7 +225,7 @@ def upper(name):
 
 def title(name1):
     '''
-    function finds out if the first name is a title and returns a boolean if it is true or false
+    Description: function finds out if the first name is a title and returns a boolean if it is true or false
     Args:
         name1: the full name of the user after it goes through the function first_name
     returns:
@@ -232,7 +237,7 @@ def title(name1):
 
 def mix_name(namef):
     '''
-    function gets the first name from the function and scrambles it by making it into a list and picking random indexs to put into empty string
+    Description: function gets the first name from the function and scrambles it by making it into a list and picking random indexs to put into empty string
     Args:
         namef: the first name of the user after it goes through the function first name
     returns:
@@ -245,11 +250,12 @@ def mix_name(namef):
         find = name1[number]
         mix += find
         name1.remove(find)
+    #if the length of the name is above 0 it will find the length-1 and use that to get a random number and use that as an index to get a random letter from the name, then add it to the empty string and delete it from the original name so it isn't picked again
     return mix
 
 def full_scramble(name):
     '''
-    function uses the full name and scrambles it by turning it into a list and picking random indexs then deleting them to make original name smaller
+    Description: function uses the full name and scrambles it by turning it into a list and picking random indexs then deleting them to make original name smaller
     Args:
         name: the full name the user imported
     returns:
@@ -262,11 +268,14 @@ def full_scramble(name):
         find = namel[number]
         scramble += find
         namel.remove(find)
+    #if the length of the name is above 0 it will find the length-1 and use that to get a random number and use that as an index to get a random letter from the name, then add it to the empty string and delete it from the original name so it isn't picked again
     return scramble
 
-
-
 def main():
+    '''
+    Description: main function that does what the user wants
+    returns:
+        whatever the user chooses it will do and loop until user exits'''
     name = input("enter your fullname (you need a middle name for all functions) ")
     print("what do you want to do?")
     name1 = first_name(name)
@@ -324,6 +333,4 @@ def main():
             exit()
         else:
             print("choose an option ")
-    
 main()
-     
