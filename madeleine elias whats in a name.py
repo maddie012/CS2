@@ -312,8 +312,12 @@ def main():
             print("lowercase:")
             print(lower(name))
         elif question == "initials":
-            print("initials:")
-            print(initials(name1,name2,name3))
+            check = middle_name(name)
+            if check == "":
+                print("you are missing a necessary name")
+            else:
+                print("initials:")
+                print(initials(name1,name2,name3))
         elif question == "palindrome":
             print("is it a palindrome")
             palindrome(name1)
