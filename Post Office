@@ -5,95 +5,63 @@
 #challenges:
 #sources:
 #Log: 1.0 initial release
+def get_zone(zipcode):
+    if 1<=zipcode<=6999:
+        return 1
+    elif 7000<=zipcode<=19999:
+        return 2
+    elif 20000<=zipcode<=35999:
+        return  3
+    elif 36000<=zipcode<=62999:
+        return 4
+    elif 63000<=zipcode<=84999:
+        return 5
+    elif 85000<=zipcode<=99999:
+        return 6
+    else:
+        return -1
 
-def split(info):
-    '''
-    Description: turns what the user inputed as a list of all the needed information
-    Args:
-        info: what the user inputed with the information about the package
-    Returns:
-        list which is the information as a list that splits where there is a comma'''
-    list = info.split(",")
-    return list
-
-def get_distance(list):
+def get_distance(startzip, stopzip):
     '''
     Description: gets the zones of where the package is going and the total zones its going through
     Args:
         list: the list of the information gotten from split()
     Returns:
         distance which is the number of zones the package goes through '''
-    start = float(list[3])     #turns them into float so they can be used in equations
-    stop = float(list[4])
-    srzone = 0
-    spzone = 0
-    if 1<=start and start<=6999:
-        srzone = 1
-    elif 7000<=start and start<=19999:
-        srzone = 2
-    elif 20000<=start and start<=35999:
-        srzone = 3
-    elif 36000<=start and start<=62999:
-        srzone = 4
-    elif 63000<=start and start<=84999:
-        srzone = 5
-    elif 85000<=start and start<=99999:
-        srzone = 6
+    spzone = get_zone(startzip)
+    srzone = get_zone(stopzip)
+    if spzone !=  -1 and srzone != -1: #if it is not 100 which is invalid
+        return abs(spzone - srzone)
     else:
-        srzone = 100
-    if 1<=stop and stop<=6999:
-        spzone = 1
-    elif 7000<=stop and stop<=19999:
-        spzone = 2
-    elif 20000<=stop and stop<=35999:
-        spzone = 3
-    elif 36000<=stop and stop<=62999:
-        spzone = 4
-    elif 63000<=stop and stop<=84999:
-        spzone = 5
-    elif 85000<=stop and stop<=99999:
-        spzone = 6
-    else:
-        spzone = 100
-    if spzone !=  100 and srzone != 100: #if it is 100 it is invalid
-        distance = spzone - srzone
-        if distance < 0:   #if the distance is less then 0 it will divide by -1 so it will become positive so that is how many zones it away from each other
-            distance = distance/-1
-            return distance
-        else:
-            distance = distance +0
-            return distance
-    else:
-        distance = 100
-        return distance
+        return 'Unmailable'
 
-def get_package(list):
+def get_package(length, height, thickness):
     '''
     Description: gets what kind of post card it is by checking if it follows any of the requirments for them
     Args:
         list: the list of the information gotten from split()
     returns:
         size which is the type of package it is and will be useful for knowing what the price is'''
-    size = "0"
-    length =  float(list[0])     #turns them into float so they can be used in equations
-    height =  float(list[1])
-    thickness =  float(list[2])
-    sides = length + length + height + height + thickness + thickness
+
+    sides = 2*length + 2*height +2*thickness
+
     if 3.5<=length and length<=4.25 and 3.5<=height and height<=6 and .007<=thickness and thickness<=.016:
-        size = "regular post card"
+        return "regular post card"
     elif 4.35<length and length<6 and 6<height and height<11.5 and .007<=thickness and thickness<=.015:
-        size = "large post card"
+        return "large post card"
     elif 3.5<=length and length<=6.125 and 5<=height and height<=11.5 and .016<thickness and thickness<.25:
-        size = "envelope"
+        return "envelope"
     elif 6.125<length and length<24 and 11<=height and height<=18 and .25<=thickness and thickness<=.5:
-        size = "large envelope"
-    elif 24<=length or 18<height or .5<thickness and sides<=84:
-        size = "package"
-    elif 84<sides and sides<=130:
-        size = "large package"
+        return "large envelope"
+    elif  24<=length or 18<height or .5<thickness:    #have to have nested for loops b/c then nothing would be invalid, checks for large package within
+        if sides<=84:
+            return "package"
+        elif 84<sides and sides<=130:
+            return "large package"
+        else:
+            return "invalid"
     else:
-        size = "invalid"
-    return size
+        return "invalid"
 
 def get_price(distance, size):
     '''
@@ -118,23 +86,33 @@ def get_price(distance, size):
         price = 3.95 + .35*distance
     else:
         return "UNMAILABLE" #if its not a type of post card it will just say unmailable
-    total = f'${price}'
-    return total
-        
+    return f'${price}'        
 
 def main():
+    '''
+    Description: main function that uses the other functions to find the price
+    Returns: 
+        the price of the package'''
     while True:
-        info = input("package information: ")
-        list = split(info)
-        distance = get_distance(list)
-        if distance == 100:
-            print("UNMAILABLE")
+        data = input("package information: ")
+        if data == "exit":
             exit()
         else:
-            size = get_package(list)
-            if size == "invalid":
+            info = data.split(",")
+            length =  float(info[0])     #turns them into float so they can be used in equations
+            height =  float(info[1])
+            thickness =  float(info[2])
+            start = float(info[3])
+            stop = float(info[4])
+            distance = get_distance(start, stop)
+            print(distance)
+            if distance == -1:
                 print("UNMAILABLE")
-                exit()
             else:
-                print(get_price(distance,size))
+                size = get_package(length, height, thickness)
+                print(size)
+                if size == "invalid":
+                    print("UNMAILABLE")
+                else:
+                    print(get_price(distance,size))
 main()
