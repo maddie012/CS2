@@ -3,9 +3,15 @@
 #description: gets information on a package and gets how much it would cost to ship it based on certain rules
 #bugs:
 #challenges:
-#sources:
-#Log: 1.0 initial release
+#sources: ms marciano
+#Log: 1.2 made it more efficient/shorter
 def get_zone(zipcode):
+    '''
+    Description: gets the zones of a zipcode so they can be put in another function
+    Args:
+        zipcode: the zipcode that is getting its zone figured out
+    Returns:
+        the zone of the zipcode'''
     if 1<=zipcode<=6999:
         return 1
     elif 7000<=zipcode<=19999:
@@ -19,18 +25,19 @@ def get_zone(zipcode):
     elif 85000<=zipcode<=99999:
         return 6
     else:
-        return -1
+        return -1     #it will return -1 because that means that it is invalid and will be checked later 
 
 def get_distance(startzip, stopzip):
     '''
-    Description: gets the zones of where the package is going and the total zones its going through
+    Description: finds the zones the package will go through from two different zones
     Args:
-        list: the list of the information gotten from split()
+        startzip: the zone from where the package starts
+        stopzip: the zone where the destination of the package is
     Returns:
         distance which is the number of zones the package goes through '''
     spzone = get_zone(startzip)
     srzone = get_zone(stopzip)
-    if spzone !=  -1 and srzone != -1: #if it is not 100 which is invalid
+    if spzone !=  -1 and srzone != -1: #if it is not -1 which is invalid
         return abs(spzone - srzone)
     else:
         return 'Unmailable'
@@ -39,7 +46,9 @@ def get_package(length, height, thickness):
     '''
     Description: gets what kind of post card it is by checking if it follows any of the requirments for them
     Args:
-        list: the list of the information gotten from split()
+        length: the length of the package from the information user gave
+        height: height of the package from info user gave
+        thickness: thickness of package from info user gave
     returns:
         size which is the type of package it is and will be useful for knowing what the price is'''
 
@@ -105,12 +114,10 @@ def main():
             start = float(info[3])
             stop = float(info[4])
             distance = get_distance(start, stop)
-            print(distance)
             if distance == -1:
                 print("UNMAILABLE")
             else:
                 size = get_package(length, height, thickness)
-                print(size)
                 if size == "invalid":
                     print("UNMAILABLE")
                 else:
