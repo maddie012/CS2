@@ -1,0 +1,126 @@
+#Author: Madeleine Elias
+#Date: 10/15/25
+#Description: gets information on a package and gets how much it would cost to ship it based on certain rules
+#Bugs: it won't work if you enter a letter or don't put the right amount of infomation
+#Challenges:
+#Sources: ms marciano
+#Log: 1.3 fixed formating
+def get_zone(zipcode):
+    '''
+    Description: gets the zones of a zipcode so they can be put in another function
+    Args:
+        zipcode: the zipcode that is getting its zone figured out
+    Returns:
+        the zone of the zipcode'''
+    if 1<=zipcode<=6999:
+        return 1
+    elif 7000<=zipcode<=19999:
+        return 2
+    elif 20000<=zipcode<=35999:
+        return  3
+    elif 36000<=zipcode<=62999:
+        return 4
+    elif 63000<=zipcode<=84999:
+        return 5
+    elif 85000<=zipcode<=99999:
+        return 6
+    else:
+        return -1     #it will return -1 because that means that it is invalid and will be checked later 
+
+def get_distance(startzip, stopzip):
+    '''
+    Description: finds the zones the package will go through from two different zones
+    Args:
+        startzip: the zone from where the package starts
+        stopzip: the zone where the destination of the package is
+    Returns:
+        distance which is the number of zones the package goes through '''
+    spzone = get_zone(startzip)
+    srzone = get_zone(stopzip)
+    if spzone !=  -1 and srzone != -1: #if it is not -1 which is invalid
+        return abs(spzone - srzone)
+    else:
+        return 'Unmailable'
+
+def get_package(length, height, thickness):
+    '''
+    Description: gets what kind of post card it is by checking if it follows any of the requirments for them
+    Args:
+        length: the length of the package from the information user gave
+        height: height of the package from info user gave
+        thickness: thickness of package from info user gave
+    returns:
+        size which is the type of package it is and will be useful for knowing what the price is'''
+
+    sides = length + 2*height +2*thickness
+
+    if 3.5<=length and length<=4.25 and 3.5<=height and height<=6 and .007<=thickness and thickness<=.016:
+        return "regular post card"
+    elif 4.35<length and length<6 and 6<height and height<11.5 and .007<=thickness and thickness<=.015:
+        return "large post card"
+    elif 3.5<=length and length<=6.125 and 5<=height and height<=11.5 and .016<thickness and thickness<.25:
+        return "envelope"
+    elif 6.125<length and length<24 and 11<=height and height<=18 and .25<=thickness and thickness<=.5:
+        return "large envelope"
+    elif  24<=length or 18<height or .5<thickness:    #have to have nested for loops b/c then nothing would be invalid, checks for large package within
+        if sides<=84:
+            return "package"
+        elif 84<sides and sides<=130:
+            return "large package"
+        else:
+            return "invalid"
+    else:
+        return "invalid"
+
+def get_price(distance, size):
+    '''
+    Description: uses distance and size to see what kind of card it is then using the distance in the corresponding equation to get the right price
+    Args:
+        distance: how many zones the post card goes through gotten from get_distance()
+        size: what type of card/package it is gotten from get_package()
+    returns:
+        the price of what it would be to send the card/package to the destination'''
+    price = 0
+    if size == "regular post card":
+        price = .20 + .03*distance    #equation to get the corresponding price
+    elif size == "large post card":
+        price = .37 + .03*distance
+    elif size == "envelope":
+        price = .37 + .04*distance
+    elif size == "large envelope":
+        price = .60 + .05*distance
+    elif size == "package":
+        price = 2.95 + .25*distance
+    elif size == "large package":
+        price = 3.95 + .35*distance
+    else:
+        return -1  #if its not a type of post card it will just say unmailable
+    newnum = "{:.2f}".format(price) #uses the format function so it will stop at the hundreths place       
+    return newnum       
+
+def main():
+    '''
+    Description: main function that uses the other functions to find the price
+    Returns: 
+        the price of the package'''
+    while True:
+        data = input("package information: ")
+        if data == "exit":
+            exit()
+        else:
+            info = data.split(",")
+            length =  float(info[0])     #turns them into float so they can be used in equations
+            height =  float(info[1])
+            thickness =  float(info[2])
+            start = float(info[3])
+            stop = float(info[4])
+            distance = get_distance(start, stop)
+            if distance == -1:
+                print("UNMAILABLE")
+            else:
+                size = get_package(length, height, thickness)
+                if size == "invalid":
+                    print("UNMAILABLE")
+                else:
+                    print(get_price(distance,size))
+main()
