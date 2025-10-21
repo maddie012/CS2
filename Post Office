@@ -1,10 +1,10 @@
-#author: Madeleine Elias
-#date: 10/15/25
-#description: gets information on a package and gets how much it would cost to ship it based on certain rules
-#bugs:
-#challenges:
-#sources: ms marciano
-#Log: 1.2 made it more efficient/shorter
+#Author: Madeleine Elias
+#Date: 10/15/25
+#Description: gets information on a package and gets how much it would cost to ship it based on certain rules
+#Bugs: it won't work if you enter a letter or don't put the right amount of infomation
+#Challenges:
+#Sources: ms marciano
+#Log: 1.3 fixed formating
 def get_zone(zipcode):
     '''
     Description: gets the zones of a zipcode so they can be put in another function
@@ -52,7 +52,7 @@ def get_package(length, height, thickness):
     returns:
         size which is the type of package it is and will be useful for knowing what the price is'''
 
-    sides = 2*length + 2*height +2*thickness
+    sides = length + 2*height +2*thickness
 
     if 3.5<=length and length<=4.25 and 3.5<=height and height<=6 and .007<=thickness and thickness<=.016:
         return "regular post card"
@@ -94,8 +94,9 @@ def get_price(distance, size):
     elif size == "large package":
         price = 3.95 + .35*distance
     else:
-        return "UNMAILABLE" #if its not a type of post card it will just say unmailable
-    return f'${price}'        
+        return -1  #if its not a type of post card it will just say unmailable
+    newnum = "{:.2f}".format(price) #uses the format function so it will stop at the hundreths place       
+    return newnum       
 
 def main():
     '''
