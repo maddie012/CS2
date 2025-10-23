@@ -54,7 +54,6 @@ def get_package(length, height, thickness):
         size which is the type of package it is and will be useful for knowing what the price is'''
 
     sides = length + 2*height + 2*thickness
-    print(sides)
 
     if 3.5<=length and length<=4.25 and 3.5<=height and height<=6 and .007<=thickness and thickness<=.016:
         return "regular post card"
