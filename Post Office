@@ -4,7 +4,7 @@
 #Bugs: it won't work if you enter a letter or don't put the right amount of infomation
 #Challenges:
 #Sources: ms marciano
-#Log: 1.3 fixed formating
+#Log: 1.4 fixed large package bug
 
 def get_zone(zipcode):
     '''
@@ -54,7 +54,6 @@ def get_package(length, height, thickness):
         size which is the type of package it is and will be useful for knowing what the price is'''
 
     sides = length + 2*height + 2*thickness
-
     if 3.5<=length and length<=4.25 and 3.5<=height and height<=6 and .007<=thickness and thickness<=.016:
         return "regular post card"
     elif 4.25<length and length<6 and 6<height and height<11.5 and .007<=thickness and thickness<=.015:
@@ -93,6 +92,7 @@ def get_price(distance, size):
         return 3.95 + .35*distance
     else:
         return 'unmailable'
+        
 def main():
     '''
     Description: main function that uses the other functions to find the price
