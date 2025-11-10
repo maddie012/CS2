@@ -24,12 +24,11 @@
         
         <button type="button" onclick="main()">Submit</button>
     </form>
-
     <script>
         /**
          * Main function to read in the data from the form
          */
-        function main() {
+        function main(){
             // Read in the data from the form
             const length = parseFloat(document.getElementById('length').value);
             const height = parseFloat(document.getElementById('height').value);
@@ -44,9 +43,8 @@
                 alert("unmailable");
             } else {
                 var price = getPrice(distance, posttype);
-                alert(price.toFixed(2));   
+                alert(price.toFixed(2).toString().replace(/^0+/, '')); 
             }
-            
         }
 
         /**
@@ -78,14 +76,13 @@
          * @param {number} height - The height of the box
          * @param {number} thickness - The thickness of the box
          */
-        function getDistance(zipFrom, zipTo) {
+        function getDistance(zipFrom, zipTo){
             // Implementation goes here
             var spzone = getZone(zipFrom);
             var srzone = getZone(zipTo);
             if (spzone == -1 && srzone == -1){
                 return "unmailable";
-            }return Math.abs(spzone-srzone);
-            
+            }return Math.abs(spzone-srzone); 
         }
 
         function getPackage(length, height, thickness){
@@ -105,7 +102,6 @@
                 return "unmailable";
             }        
         }
-
 
         function getPrice(distance, size){
             if (size == "regular post card"){
@@ -129,4 +125,3 @@
 </body>
 </html>
         
-
