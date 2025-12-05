@@ -43,14 +43,44 @@ try:
             print(f'Female Survival Rate: {survgrl/totalgrl*100}%')
             print(f'Male Survival Rate: {survbys/totalbys*100}%')
 
-        def check():
-            check = "working"
-            print(check)
+        def age_analysis():
+            total = 0
+            allage = 0
+            maxage = 0
+            minage = 0
+            survived = 0
+            died = 0
+            agesurv = 0
+            agedead=0
+
+            for line in file:
+                row = line.strip().split(',')
+                total += 1
+                if row[6] != "":
+                    age = int(row[6])
+                    allage += age
+                    if age > maxage:
+                        age = maxage
+                    if age < minage:
+                        age = minage
+                    if row[1] == "1":
+                        survived +=1
+                        agesurv += int(row[6])
+                    else:
+                        died+=1
+                        agedead += int(row[6])
+
+            print(f'Average age: {allage/total}')
+            print(f'The oldest passenger is {maxage}')
+            print(f'The youngest passenger is: {minage}')
+
+
+
         
         def main():
             ten_rows()
             survival_rate()
-            check()
+            age_analysis()
         main()
         
 except FileNotFoundError:
