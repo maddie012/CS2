@@ -86,6 +86,8 @@ try:
                         agedead += float(row[6])
 
             print(f'Average age: {"{:.2f}".format(allage/total)}')
+            print(f'Average age of people who survived: {"{:.2f}".format(agesurv/survived)}')
+            print(f'Average age of people who died is: {"{:.2f}".format(agedead/died)}')
             print(f'The oldest passenger is {maxage} years old')
             print(f'The youngest passenger is {minage} years old')
 
@@ -144,8 +146,39 @@ try:
             print(f'Average fare of 2nd class: {"{:.2f}".format(pay2/all2)}$')
             print(f'Average fare of 3rd class: {"{:.2f}".format(pay3/all3)}$')
 
-        '''def family_survival():
-            with open('titanic.csv', 'w') as file:'''
+        def family_survival():
+            file.seek(0)
+            family_size = []
+            survived = 0
+            survivedfam = 0
+            dead=0
+            deadfam=0
+            
+
+            next(file)
+
+            for line in file:
+                row = line.strip().split(',')
+                nextnum = float(row[7]) + float(row[8]) + 1
+                family_size.append(nextnum)
+                if row[1]=="1":
+                    survived +=1
+                    survivedfam = survivedfam + nextnum
+                else:
+                    dead+=1
+                    deadfam = deadfam +nextnum
+            deadfam_ave = "{:.2f}".format(deadfam/dead)
+            survivedfam_ave = "{:.2f}".format(survivedfam/survived)
+            if (float(deadfam_ave) +2) < float(survivedfam_ave):
+                print('the average family size for people that survived is larger that for the people that didnt')
+            elif (float(survivedfam_ave)+2) < float(deadfam_ave):
+                print("the average family sized for the people that dies is larger that for the people that surived")
+            else:
+                print("there is little difference from the family size of the people who survived and the people who died")
+            print(f'the average family size for dead people is : {deadfam_ave}')
+            print(f'the average family sized for people that survived is: {survivedfam_ave}')
+
+            
             
 
 
@@ -156,6 +189,7 @@ try:
             survival_rate()
             age_analysis()
             analysis_class()
+            family_survival()
         main()
         
 except FileNotFoundError:
