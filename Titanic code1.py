@@ -45,10 +45,14 @@ try:
             print(f'Total Survival Rate: {"{:.2f}".format(survived/total*100)}%')
             print(f'Female Survival Rate: {"{:.2f}".format(survgrl/totalgrl*100)}%')
             print(f'Male Survival Rate: {"{:.2f}".format(survbys/totalbys*100)}%')
+            total_survival_rate="{:.2f}".format(survived/total*100)
+            female_survival_rate = "{:.2f}".format(survgrl/totalgrl*100)
+            male_survival_rate = "{:.2f}".format(survbys/totalbys*100)
             if(survgrl/totalgrl*100) > (survbys/totalbys*100):
                 print("The women had a higher survival rate than the men")
             else:
                 print("The men had a higher survival rate than women")
+            return total_survival_rate, female_survival_rate, male_survival_rate
 
         def age_analysis():
             file.seek(0)
@@ -65,11 +69,12 @@ try:
 
             for line in file:
                 row = line.strip().split(',')
-                total += 1
+                
 
                 if row[6] != "":
                     age = float(row[6])
                     allage += age
+                    total += 1
 
                     if age > maxage:
                         usemth1 = age-maxage              #I have to use usemth1 and 2 because it was not working if I said  maxage = age or minage = age it was not changing maxage or minage
@@ -90,6 +95,10 @@ try:
             print(f'Average age of people who died is: {"{:.2f}".format(agedead/died)}')
             print(f'The oldest passenger is {maxage} years old')
             print(f'The youngest passenger is {minage} years old')
+            average_age = "{:.2f}".format(allage/total)
+            average_survival_age = "{:.2f}".format(agesurv/survived)
+            average_died_age = "{:.2f}".format(agedead/died)
+            return average_age, average_survival_age, average_died_age, maxage, minage
 
         def analysis_class():
             file.seek(0)
@@ -145,6 +154,14 @@ try:
             print(f'Average fare of 1st class: {"{:.2f}".format(pay1/all1)}$')
             print(f'Average fare of 2nd class: {"{:.2f}".format(pay2/all2)}$')
             print(f'Average fare of 3rd class: {"{:.2f}".format(pay3/all3)}$')
+            first_class_survival_rate = "{:.2f}".format(survrate1)
+            second_class_survival_rate = "{:.2f}".format(survrate2)
+            third_class_survival_rate = "{:.2f}".format(survrate3)
+            average_fare = "{:.2f}".format(allpay/total)
+            first_class_fare = "{:.2f}".format(pay1/all1)
+            second_class_fare = "{:.2f}".format(pay2/all2)
+            third_class_fare = "{:.2f}".format(pay3/all3)
+            return first_class_survival_rate, second_class_survival_rate, third_class_survival_rate, average_fare, first_class_fare, second_class_fare, third_class_fare
 
         def family_survival():
             file.seek(0)
@@ -160,7 +177,8 @@ try:
             for line in file:
                 row = line.strip().split(',')
                 nextnum = float(row[7]) + float(row[8]) + 1
-                family_size.append(nextnum)
+                workbetter = str(nextnum)
+                family_size.append(workbetter)
                 if row[1]=="1":
                     survived +=1
                     survivedfam = survivedfam + nextnum
@@ -177,8 +195,34 @@ try:
                 print("there is little difference from the family size of the people who survived and the people who died")
             print(f'the average family size for dead people is : {deadfam_ave}')
             print(f'the average family sized for people that survived is: {survivedfam_ave}')
+            return family_size, deadfam_ave, survivedfam_ave
+        
+        def family_column(family_size):
+            input_file = 'titanic.csv'
+            output_file = 'famtitanic.csv'
+            new_column_header = "family size"
+            new_column_data = family_size
+            with open(input_file, 'r') as f_in:
+                lines = f_in.readlines()
+                updated_lines = []
+                header = lines[0].strip()
+                updated_lines.append(f"{header},{new_column_header}\n")
+                for i, line in enumerate(lines[1:], 0):
+                     existing_row = line.strip().split(',')
+                     new_value = new_column_data[i]
+                     existing_row.append(new_value)
+                     updated_line = ",".join(existing_row) + "\n"
+                     family_size.append(updated_line)
+                     with open(output_file, 'w') as f_out:
+                        f_out.writelines(updated_lines)
 
-            
+                        
+
+
+
+
+
+        
             
 
 
@@ -190,6 +234,9 @@ try:
             age_analysis()
             analysis_class()
             family_survival()
+            family_size, deadfam_ave, survivedfam_ave = family_survival()
+            family_column(family_size)
+
         main()
         
 except FileNotFoundError:
