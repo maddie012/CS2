@@ -1,8 +1,13 @@
+
 try:
     with open('titanic.csv', 'r') as file:
+        data = file.readlines()
         #header = file.readline().strip().split(',')  # Read the header row
         #name_index = header.index('Name')  # Find the index of 'Name' column
         def ten_rows():
+            '''Description: prints the first ten lines
+            Args: none
+            Returns: print the first ten rows'''
             file.seek(0)
             rownum=0
             for line in file:
@@ -16,6 +21,12 @@ try:
             #print(row[name_index])
 
         def survival_rate():
+            '''Description: checks the survival rate of everyone, boys, and girls. It makes more variables to add the people who died by looking at the index and then dividing by the total number of people. Then checks to see which survival rate was higher
+            Args: none
+            Returns: 
+                total_survival_rate: the average of everyone survival
+                female_survival_rate: the average survival rate of women
+                male_survival_rate: the average survival rate of the men'''
             file.seek(0)
             total = 0
             survived = 0
@@ -196,38 +207,36 @@ try:
             print(f'the average family size for dead people is : {deadfam_ave}')
             print(f'the average family sized for people that survived is: {survivedfam_ave}')
             return family_size, deadfam_ave, survivedfam_ave
+          
         
-        def family_column(family_size):
-            input_file = 'titanic.csv'
-            output_file = 'famtitanic.csv'
-            new_column_header = "family size"
-            new_column_data = family_size
-            with open(input_file, 'r') as f_in:
-                lines = f_in.readlines()
-                updated_lines = []
-                header = lines[0].strip()
-                updated_lines.append(f"{header},{new_column_header}\n")
-                for i, line in enumerate(lines[1:], 0):
-                     existing_row = line.strip().split(',')
-                     new_value = new_column_data[i]
-                     existing_row.append(new_value)
-                     updated_line = ",".join(existing_row) + "\n"
-                     family_size.append(updated_line)
-                     with open(output_file, 'w') as f_out:
-                        f_out.writelines(updated_lines)
-
-                        
-
-
-
-
-
-        
+        def try_again_column(family_size):
+            new_header_name = "family_size"
+            with open('titanic.csv', 'r') as infile, open('titanic_family.csv', 'w') as outfile:
+                lines = infile.readlines()
+                if lines:
+                    original_header = lines[0].strip()
+                    new_header_row = f"{original_header}, {new_header_name}\n"
+                    outfile.write(new_header_row)
+                for i in range(1, len(lines)):
+                    original_line = lines[i].strip()
+                    new_value = family_size[i-1]    #it is i-1 because we add the new header at the beginning
+                    modified_line = f"{original_line}, {new_value}\n"
+                    outfile.write(modified_line)
             
 
 
 
-        
+
+
+
+
+
+
+
+
+
+
+
         def main():
             ten_rows()
             survival_rate()
@@ -235,8 +244,9 @@ try:
             analysis_class()
             family_survival()
             family_size, deadfam_ave, survivedfam_ave = family_survival()
-            family_column(family_size)
+            try_again_column(family_size)
 
+        
         main()
         
 except FileNotFoundError:
