@@ -1,4 +1,8 @@
-
+#Arthor: Madeleine Elias
+#Date: 1/23/26
+#Description: uses the titanic csv file that has information about the people on the titanic and organizes information about them
+#sources: Ms marciano, W3schools, google
+#Log: 1.5 fixed function that adds new column
 try:
     with open('titanic.csv', 'r') as file:
         data = file.readlines()
@@ -66,6 +70,14 @@ try:
             return total_survival_rate, female_survival_rate, male_survival_rate
 
         def age_analysis():
+            '''Description: is analysis of the ages and finds average age, youngest age, oldest age and the average ages of the people who died and survived
+            Args: none
+            Returns: 
+                Average age: average age of people
+                average_survival_age: average age of people who survived
+                average_died_age: average age of people who died
+                minage: youngest age
+                maxage: oldest age'''
             file.seek(0)
             total = 0
             allage = 0
@@ -112,6 +124,16 @@ try:
             return average_age, average_survival_age, average_died_age, maxage, minage
 
         def analysis_class():
+            '''Description: analysis based on class and finds survival rate of each class and which one was more likely to survive and the fare
+            args: none
+            returns:
+                average_fare: average fare of all people
+                first_class_survival_rate: 1st class survival rate
+                first_class_fare: 1st class fare
+                second_class_survival_rate: 2nd class survival rate
+                second_class_fare: 2nd class fare
+                third_class_survival_rate: 3rd class survival rate
+                third_class_fare: 3rd class fare'''
             file.seek(0)
             total = 0
             all1 = 0
@@ -175,6 +197,12 @@ try:
             return first_class_survival_rate, second_class_survival_rate, third_class_survival_rate, average_fare, first_class_fare, second_class_fare, third_class_fare
 
         def family_survival():
+            '''Description: finds the average family size and the average of those who died and survived
+            args: none
+            returns:
+                family_size: average family size
+                deadfam_ave: average family size for dead people
+                survivedfam_ave: average family size for people who survived'''
             file.seek(0)
             family_size = []
             survived = 0
@@ -210,6 +238,11 @@ try:
           
         
         def try_again_column(family_size):
+            '''Description: makes a new file called 'titanic_family.csv' that has new column with family size
+            args:
+                family_size: the family size of every one from function family_survival
+            returns:
+                new file with new column'''
             new_header_name = "family_size"
             with open('titanic.csv', 'r') as infile, open('titanic_family.csv', 'w') as outfile:
                 lines = infile.readlines()
