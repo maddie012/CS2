@@ -35,8 +35,9 @@ def hamlet():
         asc = {k: v for k, v in sorted(hamlet_dict.items(), key=lambda item: item[1])}
         for x,y in asc.items():
             print(x,y)
-        hamlet_words = list(hamlet_dict.keys())
-        hamlet_values = list(hamlet_dict.values())
+        sorted_asc = dict(asc)
+        hamlet_words = list(sorted_asc.keys())
+        hamlet_values = list(sorted_asc.values())
         return hamlet_dict, hamlet_words, hamlet_values
 
 def tempest():
@@ -61,8 +62,9 @@ def tempest():
         asc = {k: v for k, v in sorted(tempest_dict.items(), key=lambda item: item[1])}
         for x,y in asc.items():
             print(x,y)
-        tempest_words = list(tempest_dict.keys())
-        tempest_values = list(tempest_dict.values())
+        sorted_asc = dict(asc)
+        tempest_words = list(sorted_asc.keys())
+        tempest_values = list(sorted_asc.values())
         return tempest_dict, tempest_words, tempest_values
     
 def make_file(hamlet_dict):
