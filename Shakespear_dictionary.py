@@ -6,11 +6,12 @@
 #Sources: W3schools, google
 #Log: 1.1
 
-hamlet_dict = {}
-tempest_dict = {}
-boring_words= ["the", "of", "i", "a", "before", "at", "his", "to", "him", "me", "which", "did", "by", "more", "than", "mine", "own", "as", "such", "was", "and", "very", "he", "on", "you", "come", "an", "your", "some", "for", "does", "this", "can", "there", "goes", "am", "even", "have", "those", "had", "not", "been", "here", "of", "do", "these", "my", "almose", "them", "still", "is", "though", "our", "any", "us", "with", "that", "it", "are", "so", "or", "they", "about", "lets", "ever", "we", "yet", "thats", "out", "from", "things", "where", "whats", "myself", "cannot", "then", "seem", "in", "should", "like", "her", "would", "itself", "be", "into", "she", "were", "saw", "their", "each", "while", "else", "himself", "keep", "way","every","said" ,"many","makes","since" ,"after","another","could","theres","hes" ,"cause" ,"most" ,"upon" ,"now","much","if" ,"make" ,"give" ,"who","has","say","what","thing","again","but","once","last","when","Thou", "thy", "thee", "therefore", "tis", "ho", "o", "hath", "let", "may", "awhile", "made", "off", "comes", "art", "might", "thus", "doth", "whose", "why", "ist", "hast", "use", "shall", "ourselves", "twere", "further", "must", "thine", "ay", "indeed", "put", "mean", "alas", "aught", "ha", "dost", "thou"]
+import csv
+
+boring_words= ["the", "of", "i", "a", "before", "at", "his", "to", "him", "me", "which", "did", "by", "more", "than", "mine", "own", "as", "such", "was", "and", "very", "he", "on", "you", "come", "an", "your", "some", "for", "does", "this", "can", "there", "goes", "am", "even", "have", "those", "had", "not", "been", "here", "of", "do", "these", "my", "almose", "them", "still", "is", "though", "our", "any", "us", "with", "that", "it", "are", "so", "or", "they", "about", "lets", "ever", "we", "yet", "thats", "out", "from", "things", "where", "whats", "myself", "cannot", "then", "seem", "in", "should", "like", "her", "would", "itself", "be", "into", "she", "were", "saw", "their", "each", "while", "else", "himself", "keep", "way","every","said" ,"many","makes","since" ,"after","another","could","theres","hes" ,"cause" ,"most" ,"upon" ,"now","much","if" ,"make" ,"give" ,"who","has","say","what","thing","again","but","once","last","when","Thou", "thy", "thee", "therefore", "tis", "ho", "o", "hath", "let", "may", "awhile", "made", "off", "comes", "art", "might", "thus", "doth", "whose", "why", "ist", "hast", "use", "shall", "ourselves", "twere", "further", "must", "thine", "ay", "indeed", "put", "mean", "alas", "aught", "ha", "dost", "thou", "heard","rather", "till", "within","both", "hither", "didst","shalt", "tell", "em","whom", "nor", "too", "aside", "how", "ill"]
 
 def hamlet():
+    hamlet_dict = {}
     with open('Hamlet.txt', 'r') as file:
         for line in file:
             words = line.split()
@@ -34,8 +35,12 @@ def hamlet():
         asc = {k: v for k, v in sorted(hamlet_dict.items(), key=lambda item: item[1])}
         for x,y in asc.items():
             print(x,y)
+        hamlet_words = list(hamlet_dict.keys())
+        hamlet_values = list(hamlet_dict.values())
+        return hamlet_dict, hamlet_words, hamlet_values
 
 def tempest():
+    tempest_dict = {}
     with open('The Tempest.txt', 'r') as file:
         for line in file:
             words = line.split()
@@ -56,8 +61,30 @@ def tempest():
         asc = {k: v for k, v in sorted(tempest_dict.items(), key=lambda item: item[1])}
         for x,y in asc.items():
             print(x,y)
+        tempest_words = list(tempest_dict.keys())
+        tempest_values = list(tempest_dict.values())
+        return tempest_dict, tempest_words, tempest_values
+    
+def make_file(hamlet_dict):
+    fieldnames= ["words in hamlet", "hamlet_values", "words in tempest", "tempest_values"]
+    filename= "shakespeare fequency.csv"
+    with open(filename, mode = 'w', newline= '') as csvfile:
+        writer = csv.writer(csvfile)
+        # writer.writeheader()
+        for i in range(len(hamlet_dict["words in hamlet"])):
+            if len(hamlet_dict["words in tempest"]) > i: 
+                writer.writerow([hamlet_dict["words in hamlet"][i], hamlet_dict["hamlet_values"][i], hamlet_dict["words in tempest"][i], hamlet_dict["tempest_values"][i]])
+            else:
+                writer.writerow([hamlet_dict["words in hamlet"][i], hamlet_dict["hamlet_values"][i], None, None])
+        '''for key, value in hamlet_dict.items():
+            writer.writerow([key, value])'''
+
+def other_dict(hamlet_words, hamlet_values, tempest_words, tempest_values):
+    new_dict = {"words in hamlet": hamlet_words, "hamlet_values":hamlet_values, "words in tempest": tempest_words, "tempest_values":tempest_values}
+    return new_dict
 
 
-hamlet()
-tempest()
-
+hamlet_dict, hamlet_words, hamlet_values = hamlet()
+tempest_dict, tempest_words, tempest_values = tempest()
+new_dict = other_dict(hamlet_words, hamlet_values, tempest_words, tempest_values)
+make_file(new_dict)
