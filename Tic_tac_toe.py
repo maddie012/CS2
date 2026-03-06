@@ -94,9 +94,12 @@ def computer():
     if new_list[4] != "o" and new_list[4] != "x":
         new_list[4] = "x"
         computer_moves.append(5)
-    elif new_list[4] != "o" and new_list[4] != "x" and ((new_list[3] == "o" and new_list[5] == "o") or (new_list[1]== "o" and new_list[7] == "o") or (new_list[0]=="o" and new_list[8]=="o") or (new_list[2]=="o"and new_list[6] == "o")) :
-        new_list[4] = "x"
-        computer_moves.append(5)
+    elif new_list[0] != "o" and new_list[0] !="x" and ((new_list[1] == "o" and new_list[2] =="o")or (new_list[3] =="o" and new_list[6] =="o")or (new_list[4]=="o" and new_list[8]=="o")):
+        new_list[0] = "x"
+        computer_moves.append(1)
+    elif new_list[1] != "o" and new_list[1] != "x" and ((new_list[0]=="o" and new_list[2]=="o") or (new_list[4]=="o" and new_list[7]=="o")):
+        new_list[1] = "x"
+        computer_moves.append(2)
     elif new_list[3] != "o" and new_list[3] !="x" and ((new_list[4] == "o" and new_list[5]=="o") or (new_list[0]=="o" and new_list[6]=="o")):
         new_list[3] = "x"
         computer_moves.append(4)
