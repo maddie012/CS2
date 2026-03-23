@@ -2,6 +2,7 @@
 import random
 new_list = ['1','2','3','4','5','6','7','8','9']
 #Computer is x
+#player 2 is x
 #player is o
 #winning moves: [1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]
 win1 = [1,2,3]
@@ -94,6 +95,30 @@ def computer():
     if new_list[4] != "o" and new_list[4] != "x":
         new_list[4] = "x"
         computer_moves.append(5)
+    elif new_list[0]!="o" and new_list[0]!="x" and ((new_list[1] == "x" and new_list[2] =="x")or (new_list[3] =="x" and new_list[6] =="x")or (new_list[4]=="x" and new_list[8]=="x")):
+        new_list[0] ="x"
+        computer_moves.append(1)
+    elif new_list[1] != "o" and new_list[1] != "x" and ((new_list[0]=="x" and new_list[2]=="x") or (new_list[4]=="x" and new_list[7]=="x")):
+        new_list[1] = "x"
+        computer_moves.append(2)
+    elif new_list[2] != "o" and new_list[2] !="x" and ((new_list[0]=="x" and new_list[1]=="x") or (new_list[5]=="x" and new_list[8]=="x")or (new_list[4]=="x" and new_list[6]=="x")):
+        new_list[2] = "x"
+        computer_moves.append(3)
+    elif new_list[3] != "o" and new_list[3] !="x" and ((new_list[4] == "x" and new_list[5]=="x") or (new_list[0]=="x" and new_list[6]=="x")):
+        new_list[3] = "x"
+        computer_moves.append(4)
+    elif new_list[5]!="o" and new_list[5]!="x" and ((new_list[3]=="x" and new_list[4]=="x") or (new_list[2]=="x" and new_list[8]=="x")):
+        new_list[5] = "x"
+        computer_moves.append(6)
+    elif new_list[6]!="o" and new_list[6]!="x" and ((new_list[0]=="x" and new_list[3]=="x") or(new_list[7]=="x" and new_list[8]=="x")or(new_list[4]=="x"and new_list[2]=="x")):
+        new_list[6]="x"
+        computer_moves.append(7)
+    elif new_list[7]!="o" and new_list[7]!="x" and ((new_list[1]=="x" and new_list[4]=="x") or (new_list[6]=="x"and new_list[8]=="x")):
+        new_list[7]="x"
+        computer_moves.append(8)
+    elif new_list[8]!="o" and new_list[8]!="x" and ((new_list[6]=="x"and new_list[7]=="x") or (new_list[2]=="x" and new_list[5]=="x") or (new_list[0]=="x" and new_list[4]=="x")):
+        new_list[8]="x"
+        computer_moves.append(9)
     elif new_list[0] != "o" and new_list[0] !="x" and ((new_list[1] == "o" and new_list[2] =="o")or (new_list[3] =="o" and new_list[6] =="o")or (new_list[4]=="o" and new_list[8]=="o")):
         new_list[0] = "x"
         computer_moves.append(1)
@@ -118,6 +143,11 @@ def computer():
     elif new_list[8]!="o" and new_list[8]!="x" and ((new_list[6]=="o"and new_list[7]=="o") or (new_list[2]=="o" and new_list[5]=="o") or (new_list[0]=="o" and new_list[4]=="o")):
         new_list[8]="x"
         computer_moves.append(9)
+    elif new_list[4]=="o" and new_list[0]!="x" and new_list[1]!="x" and new_list[2]!="x" and new_list[3]!="x" and new_list[5]!="x" and new_list[6]!="x" and new_list[7]!="x" and new_list[8]!="x":
+        numbers = (0,2,6,8)
+        secmove = random.choice(numbers)
+        new_list[secmove] = "x"
+        computer_moves.append((secmove+1))
     else:
         while True:
             move = random.randint(0,8)
@@ -125,8 +155,7 @@ def computer():
                 new_list[move] = "x"
                 computer_moves.append(move+1)
                 break
-            #else:
-                #computer()
+            
 
 def check_win(player_moves, computer_moves):
     if (1 in player_moves and 2 in player_moves and 3 in player_moves):
@@ -179,7 +208,19 @@ def check_win(player_moves, computer_moves):
         return "win"
     else:
         return "no winner"
-    
+
+
+def clearboard():
+    new_list[0] = "1"
+    new_list[1] = "2"
+    new_list[2] = "3"
+    new_list[3] = "4"
+    new_list[4] = "5"
+    new_list[5] = "6"
+    new_list[6] = "7"
+    new_list[7] = "8"
+    new_list[8] = "9"
+
        
 
 def check_tie():
@@ -208,10 +249,12 @@ def main():
                 persongame = check_win(player_moves, player2_moves)
                 if persongame == "win":
                     print_board()
+                    clearboard()
                     break
                 end = check_tie()
                 if end == "tie":
                     print_board()
+                    clearboard()
                     break
                 print_board()
                 player2()
@@ -219,31 +262,37 @@ def main():
                 persongame = check_win(player_moves, player2_moves)
                 if persongame == "win":
                     print_board()
+                    clearboard()
                     break
                 end = check_tie()
                 if end == "tie":
                     print_board()
+                    clearboard()
                     break
         elif question == "c":
-            print("player is o and computer is x")
+            print("player is o and computer(player 2) is x")
             print_board()
             while True:
                 player()
                 game = check_win(player_moves, computer_moves)
                 if game == "win":
                     print_board()
+                    clearboard()
                     break
                 end = check_tie()
                 if end == "tie":
                     print_board()
+                    clearboard()
                     break
                 computer()
                 print_board()
                 game = check_win(player_moves, computer_moves)
                 if game == "win":
+                    clearboard()
                     break
                 end = check_tie()
                 if end == "tie":
+                    clearboard()
                     break
         elif question =="q":
             exit
