@@ -1,12 +1,9 @@
 #tictactoe2
 import random
 #Computer is x
-#player 2 is x
 #player is o
 winning_moves= [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
 
-#columns = (1,2,3)
-#rows = (1,2,3)
 player_moves = []
 computer_moves = []  
 #these keep track of what moves the player makes in rows, columns and diagonals to know if there is only one left and if the computer has to move there
@@ -33,21 +30,9 @@ callcolumns = [ccolumn1, ccolumn2, ccolumn3]
 cdiag1 = [1,5,9]
 cdiag2 = [3,5,7]
 calldiag = [cdiag1,cdiag2]
-'''
 
 
-def print_board():
-    print(f"{row1[0] and column1[0]}|{row1[1] and column2[1]}|{row1[2] and column3[2]}")
-    print(f"{row2[0] and column1[0]}|{row2[1] and column2[1]}|{row2[2] and column3[2]}")
-    print(f"{row3[0] and column1[0]}|{row3[1] and column2[1]}|{row3[2] and column3[2]}")
-
-def player():
-    whichrow = input("what row is you move in? ")
-    whichcolumn = int(input("what column is your move in? "))
-    if whichrow == "1":
-        thecolumn = row1.index(whichcolumn)'''
-
-new_list = [1,2,3,4,5,6,7,8,9]
+new_list = [1,2,3,4,5,6,7,8,9]  #this is the real tic tac toe board
 
 def print_board():
     print(f'_{new_list[0]}_|_{new_list[1]}_|_{new_list[2]}_')
@@ -56,8 +41,6 @@ def print_board():
     print("")
 
 def player():
-    '''whichrow = int(input("what row is you move in? "))
-    whichcolumn = int(input("what column is your move in? "))'''
     move = input(("what move do you want to make? "))
     try: 
         move = int(move)
@@ -66,45 +49,24 @@ def player():
     player_moves.append(move)
     move = move-1
     new_list[move] = "o"
-    for column in allcolumns:
+    for column in allcolumns:  #this goes through all the player columns/rows/diagonals and removes that move from all of them
         if (move+1) in column:
             column.remove(move+1)  #removes the last move from the columns
             print(column)
-            this_column = column
     for row in allrows:
         if (move+1) in row:
             row.remove(move+1)
             #print("still player")
             print(row)
-            this_row = row
     for diag in alldiag:
         if (move+1) in diag:
             diag.remove(move+1)
             print("still player")
             print(diag)
-    '''if this_row == row1:
-        rrow = 1
-    elif this_row == row2:
-        rrow = 2
-    else:
-        rrow = 3
-    if this_column == column1:
-        rcolumn = 1
-    elif this_column == column2:
-        rcolumn = 2
-    else:
-        rcolumn = 3
-    common0 = set(this_column) & set(this_row)
-    common0 = set(this_column).intersection(this_row)
-    #common = int(common0)
-    #common0 = common0-1
-    return rrow, rcolumn'''
 
 
 def computer():
     move = 0
-    #allrows = [row1, row2, row3]
-    #allcolumns = [column1, column2, column3]
     while True:
         if new_list[4] != "o" and new_list[4]!="x":
             new_list[4] = "x"
@@ -119,7 +81,6 @@ def computer():
             for diag in calldiag:
                 if (move) in diag:
                     diag.remove(move)
-
             print("move 5")
             return
         else:
@@ -139,10 +100,7 @@ def computer():
                 if len(column) == 1:
                     if new_list[(column[0]-1)] != "o" and new_list[(column[0]-1)]!="x":
                         print(column[0])
-                        #num = (column[0])
-                        #idexednum = num-1
                         new_list[(column[0]-1)] = "x"
-                        #new_list[idexednum] = "x"
                         computer_moves.append(column[0])
                         move = column[0]
                         column.remove(column[0])
