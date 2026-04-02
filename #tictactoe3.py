@@ -1,4 +1,9 @@
-#tictactoe3
+#Author: madeleine elias
+#date: 4/2/26
+#description: user can play tic tac toe against a computer. If user wants to play against another person go to original tic tac toe file called Tic_tac_toe.py
+#sources: old tic tac toe code
+#log: 3rd tic tac toe code
+
 import random
 #Computer is x
 #player is o
