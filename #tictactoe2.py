@@ -1,4 +1,8 @@
-#tictactoe2
+#Author: madeleine elias
+#description: user can play tic tac toe against a computer. If user wants to play against another person go to original tic tac toe file called Tic_tac_toe.py
+#sources: old tic tac toe code
+#log: 2nd tic tac toe code
+
 import random
 #Computer is x
 #player is o
@@ -41,11 +45,18 @@ def print_board():
     print("")
 
 def player():
-    move = input(("what move do you want to make? "))
-    try: 
-        move = int(move)
-    except ValueError as verr:
-        print("enter integer")
+    while True:  #puting the input in a loop and it will only break if you put in a number on the board and that number is not already made
+        copy = 0
+        move = input(("what move do you want to make? "))
+        if move == "1" or move == "2" or move == "3" or move == "4" or move == "5" or move == "6" or move == "7" or move == "8" or move == "9":
+            copy = copy + 1
+            move = int(move)
+            move = move-1
+            if new_list[move]!="o" and new_list[move]!="x":
+                copy = copy +1
+            move = move +1
+        if copy == 2:
+            break
     player_moves.append(move)
     move = move-1
     new_list[move] = "o"
@@ -56,14 +67,12 @@ def player():
     for row in allrows:
         if (move+1) in row:
             row.remove(move+1)
-            #print("still player")
             print(row)
     for diag in alldiag:
         if (move+1) in diag:
             diag.remove(move+1)
-            print("still player")
+            #print("still player")
             print(diag)
-
 
 def computer():
     move = 0
@@ -81,10 +90,10 @@ def computer():
             for diag in calldiag:
                 if (move) in diag:
                     diag.remove(move)
-            print("move 5")
+            #print("move 5")
             return
         else:
-            print("in else")
+            #print("in else")
             for row in allrows:
                 print(row)
                 if len(row)==1:
@@ -93,7 +102,7 @@ def computer():
                         computer_moves.append(row[0])
                         move = row[0]
                         row.remove(row[0])
-                        ("work1")
+                        #print("work1")
                         return
             for column in allcolumns:
                 print(column)
@@ -104,7 +113,7 @@ def computer():
                         computer_moves.append(column[0])
                         move = column[0]
                         column.remove(column[0])
-                        print("work2")
+                        #print("work2")
                         return
             for row in callrows:
                 print(row)
@@ -114,7 +123,7 @@ def computer():
                         computer_moves.append(row[0])
                         move = row[0]
                         row.remove(row[0])
-                        print("work3")
+                        #print("work3")
                         return
             for column in callcolumns:
                 print(column)
@@ -124,7 +133,7 @@ def computer():
                         computer_moves.append(column[0])
                         move = column[0]
                         column.remove(column[0])
-                        print("work4")
+                        #print("work4")
                         return
             for diag in alldiag:
                 print(diag)
@@ -134,7 +143,7 @@ def computer():
                         computer_moves.append(diag[0])
                         move = diag[0]
                         diag.remove(diag[0])
-                        print("new work 1")
+                        #print("new work 1")
                         return
             for diag in calldiag:
                 print(diag)
@@ -144,7 +153,7 @@ def computer():
                         computer_moves.append(diag[0])
                         move = diag[0]
                         diag.remove(diag[0])
-                        print("new work 2")
+                        #print("new work 2")
                         return
             if move == 0:
                 while True:
@@ -161,24 +170,16 @@ def computer():
                         for diag in calldiag:
                             if (move+1) in diag:
                                 diag.remove(move+1)
-                        print("random")
+                        #print("random")
                         return
-                        #break
-                    
-            #if move != 0:
-                #new_list[{move-1}] = "x"
-                #computer_moves.append(move)
-                #break
-            #else:
         
-
 def check_win():
-    for eachlist in winning_moves:
+    for eachlist in winning_moves: #check if the player_moves or computer_moves contain the winning moves if they do someone wins
         if set(eachlist).issubset(player_moves) == True:
-            print("win")
+            print("player wins")
             exit()
         if set(eachlist).issubset(computer_moves) == True:
-            print("win")
+            print("computer wins")
             exit()
 
 def check_tie():
@@ -189,14 +190,6 @@ def check_tie():
     if totalmoves == 9:
         print("tie")
         exit()
-
-
-
-    
-
-    
-
-
 
 def main():
     print_board()
@@ -209,5 +202,4 @@ def main():
         print_board()
         check_win()
         check_tie()
-
 main()
