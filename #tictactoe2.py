@@ -39,12 +39,19 @@ calldiag = [cdiag1,cdiag2]
 new_list = [1,2,3,4,5,6,7,8,9]  #this is the real tic tac toe board
 
 def print_board():
+    '''
+    Description: displays the tic tac toe board from list new_list which is edited when a move is made
+    Arg:none
+    Return:none'''
     print(f'_{new_list[0]}_|_{new_list[1]}_|_{new_list[2]}_')
     print(f'_{new_list[3]}_|_{new_list[4]}_|_{new_list[5]}_')
     print(f'_{new_list[6]}_|_{new_list[7]}_|_{new_list[8]}_')
     print("")
 
 def player():
+    '''Description: player chooses where to move and the code makes that move and checks to see if it if posible
+    Arg:none
+    Returns:none only edits variable'''
     while True:  #puting the input in a loop and it will only break if you put in a number on the board and that number is not already made
         copy = 0
         move = input(("what move do you want to make? "))
@@ -75,6 +82,9 @@ def player():
             print(diag)
 
 def computer():
+    '''Description: the computer moves but it depends on where the player has moved beforehand. If the player or computer is about to win it will go there to either block the player or win
+    Args:none
+    Returns:none only edits variable'''
     move = 0
     while True:
         if new_list[4] != "o" and new_list[4]!="x":
@@ -174,6 +184,9 @@ def computer():
                         return
         
 def check_win():
+    '''Description: checks to see if there is a winner yet by checking if a winning combination of moves have been made by one side
+    Args:none
+    Returns:none'''
     for eachlist in winning_moves: #check if the player_moves or computer_moves contain the winning moves if they do someone wins
         if set(eachlist).issubset(player_moves) == True:
             print("player wins")
@@ -183,6 +196,9 @@ def check_win():
             exit()
 
 def check_tie():
+    '''Description: checks to see if a tie has been made by seeing if all the moves have been taken
+    Args: none
+    Returns: none'''
     totalmoves=0
     for i in new_list:
         if i=="x" or i=="o":
