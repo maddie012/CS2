@@ -35,7 +35,7 @@ callcolumns = [ccolumn1, ccolumn2, ccolumn3]
 cdiag1 = [1,5,9]
 cdiag2 = [3,5,7]
 calldiag = [cdiag1,cdiag2]
-allways = [allrows, allcolumns, alldiag, callrows, callcolumns, calldiag]
+allways = [callrows, callcolumns, calldiag, allrows, allcolumns, alldiag]
 
 
 new_list = [1,2,3,4,5,6,7,8,9]  #this is the real tic tac toe board
@@ -142,10 +142,10 @@ def check_win():
     for eachlist in winning_moves: #check if the player_moves or computer_moves contain the winning moves if they do someone wins
         if set(eachlist).issubset(player_moves) == True:  #seeing if all of one set of winning moves is in one of their moves
             print("player wins")
-            exit()
+            return("player wins")
         if set(eachlist).issubset(computer_moves) == True:
             print("computer wins")
-            exit()
+            return("computer wins")
 
 def check_tie():
     '''Description: checks to see if a tie has been made by seeing if all the moves have been taken
@@ -157,17 +157,72 @@ def check_tie():
             totalmoves= totalmoves+1
     if totalmoves == 9:
         print("tie")
-        exit()
+        return("tie")
+
+
+def clearboard():
+    '''Description: clears the board by setting everything back to the original so player can play again
+    Args: none
+    Returns: none'''
+    player_moves[:] = []
+    computer_moves[:] = []  
+    #these keep track of what moves the player makes in rows, columns and diagonals to know if there is only one left and if the computer has to move there
+    row1[:] = [1,2,3]
+    row2[:] = [4,5,6]
+    row3[:] = [7,8,9]
+    allrows[:] = [row1, row2, row3]
+    column1[:] = [1,4,7]
+    column2[:] = [2,5,8]
+    column3[:] = [3,6,9]
+    allcolumns[:] = [column1, column2, column3]
+    diag1[:] = [1,5,9]
+    diag2[:] = [3,5,7]
+    alldiag[:] = [diag1,diag2]
+    #next ones are just for computer to keep tract they are here for the exact same reason as the others
+    crow1[:] = [1,2,3]
+    crow2[:] = [4,5,6]
+    crow3[:] = [7,8,9]
+    callrows[:] = [crow1, crow2, crow3]
+    ccolumn1[:] = [1,4,7]
+    ccolumn2[:] = [2,5,8]
+    ccolumn3[:] = [3,6,9]
+    callcolumns[:] = [ccolumn1, ccolumn2, ccolumn3]
+    cdiag1[:] = [1,5,9]
+    cdiag2[:] = [3,5,7]
+    calldiag[:] = [cdiag1,cdiag2]
+    allways[:] = [callrows, callcolumns, calldiag, allrows, allcolumns, alldiag]
+    new_list[:] = [1,2,3,4,5,6,7,8,9]  #this is the real tic tac toe board
 
 def main():
-    print_board()
     while True:
-        player()
-        print_board()
-        check_win()
-        check_tie()
-        computer()
-        print_board()
-        check_win()
-        check_tie()
+        question = input("do you want to play? y/n ")
+        if question == "n":
+            exit()
+        elif question == "y":
+            print_board()
+            while True:
+                player()
+                print_board()
+                win = check_win()
+                if win == "computer wins" or win == "player wins":
+                    clearboard()
+                    break
+                tie = check_tie()
+                if tie == "tie":
+                    clearboard()
+                    break
+                computer()
+                print_board()
+                win = check_win()
+                if win == "computer wins" or win == "player wins":
+                    clearboard()
+                    break
+                tie = check_tie()
+                if tie == "tie":
+                    clearboard()
+                    break
+        else:
+            print("you did not input correctly")          
 main()
+
+
