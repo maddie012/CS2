@@ -1,5 +1,5 @@
 #battleship
-#each () is a boat
+#each ~ is a boat
 #x is hit
 #o is miss
 import random
@@ -13,17 +13,17 @@ cwin = []
 def print_board():
     print("")
     print("")
-    print(f'| {hitboard[0]}| {hitboard[1]}| {hitboard[2]}| {hitboard[3]}| {hitboard[4]}|')
-    print(f'| {hitboard[5]}| {hitboard[6]}| {hitboard[7]}| {hitboard[8]}| {hitboard[9]}|')
-    print(f'|{hitboard[10]}|{hitboard[11]}|{hitboard[12]}|{hitboard[13]}|{hitboard[14]}|')
-    print(f'|{hitboard[15]}|{hitboard[16]}|{hitboard[17]}|{hitboard[18]}|{hitboard[19]}|')
-    print(f'|{hitboard[20]}|{hitboard[21]}|{hitboard[22]}|{hitboard[23]}|{hitboard[24]}|')
+    print(f'| {hitboard[0]} | {hitboard[1]} | {hitboard[2]} | {hitboard[3]} | {hitboard[4]} |')
+    print(f'| {hitboard[5]} | {hitboard[6]} | {hitboard[7]} | {hitboard[8]} | {hitboard[9]}|')
+    print(f'| {hitboard[10]}| {hitboard[11]}| {hitboard[12]}| {hitboard[13]}| {hitboard[14]}|')
+    print(f'| {hitboard[15]}| {hitboard[16]}| {hitboard[17]}| {hitboard[18]}| {hitboard[19]}|')
+    print(f'| {hitboard[20]}| {hitboard[21]}| {hitboard[22]}| {hitboard[23]}| {hitboard[24]}|')
     print("")
-    print(f'| {board[0]}| {board[1]}| {board[2]}| {board[3]}| {board[4]}|')
-    print(f'| {board[5]}| {board[6]}| {board[7]}| {board[8]}| {board[9]}|')
-    print(f'|{board[10]}|{board[11]}|{board[12]}|{board[13]}|{board[14]}|')
-    print(f'|{board[15]}|{board[16]}|{board[17]}|{board[18]}|{board[19]}|')
-    print(f'|{board[20]}|{board[21]}|{board[22]}|{board[23]}|{board[24]}|')
+    print(f'| {board[0]} | {board[1]} | {board[2]} | {board[3]} | {board[4]} |')
+    print(f'| {board[5]} | {board[6]} | {board[7]} | {board[8]} | {board[9]}|')
+    print(f'| {board[10]}| {board[11]}| {board[12]}| {board[13]}| {board[14]}|')
+    print(f'| {board[15]}| {board[16]}| {board[17]}| {board[18]}| {board[19]}|')
+    print(f'| {board[20]}| {board[21]}| {board[22]}| {board[23]}| {board[24]}|')
 
 def c_pickb():
     for _ in range(4):
@@ -46,7 +46,10 @@ def p_pickb():
             if copy == 2:
                 break
         personboats.append(mv)
-        board[(mv-1)]="()"
+        if (mv-1)<10:
+            board[(mv-1)]="~"
+        else:
+            board[(mv-1)]="~ "
 
 def person_move():
     while True:
@@ -56,50 +59,81 @@ def person_move():
             copy = copy+1
             mv = int(mv)
             mv = mv -1
-            if hitboard[mv]!="o" and hitboard[mv]!="x":
+            if hitboard[mv]!="o" and hitboard[mv]!="x" and hitboard[mv]!="x " and hitboard[mv]!="o ": 
                 copy = copy+1
                 mv = mv +1
         if copy == 2:
             break
     if mv in computerboats:
         pwin.append(1)
-        hitboard[(mv-1)]="x"
+        if (mv-1)<10:
+            hitboard[(mv-1)]="x"
+        else:
+            hitboard[(mv-1)]="x "
         print("you hit them")
     else:
-        hitboard[(mv-1)]="o"
+        if (mv-1)<10:
+            hitboard[(mv-1)]="o"
+        else:
+            hitboard[(mv-1)]="o "
         print("you missed them")
 
 def computer_move():
     while True:
         move = random.randint(0,24)
-        if board[move]!="x" and board[move]!="o":
+        if board[move]!="x" and board[move]!="o" and board[move]!="o " and board[move]!="x ":
             break
     if (move+1) in personboats:
         cwin.append(1)
-        board[move]="x"
+        if move <10:
+            board[move]="x"
+        else:
+            board[move]="x "
         print("you got hit")
     else:
-        board[move]="o"
+        if move<10:
+            board[move]="o"
+        else:
+            board[move]="o "
         print("the computer missed")
 
 def win():
     if len(pwin) == 4:
         print("player wins")
-        exit()
+        return "win"
     if len(cwin) == 4:
         print("computer wins")
-        exit()
+        return "win"
+
+def clearboard():
+    hitboard[:] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25] #where player is shooting towards
+    board[:] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25] #where your boats are 
+    computerboats[:] = []
+    personboats[:]=[]
+    pwin[:] = []
+    cwin[:] = []
 
 def main():
-    print_board()
-    c_pickb()
-    p_pickb()
-    print_board()
     while True:
-        person_move()
-        print_board()
-        win()
-        computer_move()
-        print_board()
-        win()
+        question = input("do you want to play? y/n ").lower()
+        if question == "n":
+            exit()
+        if question == "y":
+            print_board()
+            c_pickb()
+            p_pickb()
+            print_board()
+            while True:
+                person_move()
+                print_board()
+                wins = win()
+                if wins == "win":
+                    clearboard()
+                    break
+                computer_move()
+                print_board()
+                wins = win()
+                if wins == "win":
+                    clearboard
+                    break
 main()
