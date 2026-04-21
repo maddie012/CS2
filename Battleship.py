@@ -1,7 +1,7 @@
-#battleship
-#each ~ is a boat
-#x is hit
-#o is miss
+#author: Madeleine Elias
+#date: 4/17/26
+#description: user plays battleship against computer
+#each ~ is a boat, x is hit, o is miss 🚢
 import random
 hitboard = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25] #where player is shooting towards
 board = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25] #where your boats are 
@@ -9,31 +9,33 @@ computerboats = []
 personboats=[]
 pwin = []
 cwin = []
-
-def print_board():
-    print("")
-    print("")
-    print(f'| {hitboard[0]} | {hitboard[1]} | {hitboard[2]} | {hitboard[3]} | {hitboard[4]} |')
-    print(f'| {hitboard[5]} | {hitboard[6]} | {hitboard[7]} | {hitboard[8]} | {hitboard[9]}|')
-    print(f'| {hitboard[10]}| {hitboard[11]}| {hitboard[12]}| {hitboard[13]}| {hitboard[14]}|')
-    print(f'| {hitboard[15]}| {hitboard[16]}| {hitboard[17]}| {hitboard[18]}| {hitboard[19]}|')
-    print(f'| {hitboard[20]}| {hitboard[21]}| {hitboard[22]}| {hitboard[23]}| {hitboard[24]}|')
+def print_board(board):
+    '''description: prints the board. One is where player is shooting, other is the one with your boats
+    args: 
+        board: either the players board or the computers
+    returns: prints the boards'''
     print("")
     print(f'| {board[0]} | {board[1]} | {board[2]} | {board[3]} | {board[4]} |')
     print(f'| {board[5]} | {board[6]} | {board[7]} | {board[8]} | {board[9]}|')
     print(f'| {board[10]}| {board[11]}| {board[12]}| {board[13]}| {board[14]}|')
     print(f'| {board[15]}| {board[16]}| {board[17]}| {board[18]}| {board[19]}|')
     print(f'| {board[20]}| {board[21]}| {board[22]}| {board[23]}| {board[24]}|')
+    print("")
 
 def c_pickb():
+    '''Description: picks where the boats are for the computer randomly
+    args: none
+    returns: adds the move to a list to keep track of them'''
     for _ in range(4):
         while True:
             move = random.randint(1,25)
             if move not in computerboats:
                 computerboats.append(move)
-                break
-        
+                break  
 def p_pickb():
+    '''description: the player picks where the boats are
+    args: none
+    returns: adds the boats to a list to keep track and puts a ship (~) on the board'''
     for _ in range(4):
         while True:
             copy = 0
@@ -52,6 +54,9 @@ def p_pickb():
             board[(mv-1)]="~ "
 
 def person_move():
+    '''description: the player picks where to make a shot
+    args: none
+    returns: shoots other board if its a hit x if it misses o'''
     while True:
         copy = 0 
         mv = input("where would you like to hit ")
@@ -77,8 +82,10 @@ def person_move():
         else:
             hitboard[(mv-1)]="o "
         print("you missed them")
-
 def computer_move():
+    '''decription: computer randomly chooses where to hit
+    args: none
+    returns: puts an x on player board if it hits, an o if misses'''
     while True:
         move = random.randint(0,24)
         if board[move]!="x" and board[move]!="o" and board[move]!="o " and board[move]!="x ":
@@ -98,14 +105,19 @@ def computer_move():
         print("the computer missed")
 
 def win():
+    '''description: checks to see if there is a winner yet
+    args: none
+    returns: win if there is a win'''
     if len(pwin) == 4:
         print("player wins")
         return "win"
     if len(cwin) == 4:
         print("computer wins")
         return "win"
-
 def clearboard():
+    '''description: clears the board so they can play again
+    args: none
+    returns: changes all the varibles to what they originally where'''
     hitboard[:] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25] #where player is shooting towards
     board[:] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25] #where your boats are 
     computerboats[:] = []
@@ -119,19 +131,21 @@ def main():
         if question == "n":
             exit()
         if question == "y":
-            print_board()
+            print_board(board)
             c_pickb()
             p_pickb()
-            print_board()
+            print_board(board)
             while True:
                 person_move()
-                print_board()
+                print_board(hitboard)
+                print_board(board)
                 wins = win()
                 if wins == "win":
                     clearboard()
                     break
                 computer_move()
-                print_board()
+                print_board(hitboard)
+                print_board(board)
                 wins = win()
                 if wins == "win":
                     clearboard
