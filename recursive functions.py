@@ -21,13 +21,13 @@ def sum_digets(n):
         return 0
     else:
         num = math.remainder(n,10)
-        return(num+sum_digets(n//10)) #the num is the remainder of n/10 so it would get the 3, 2 and 1 of 123 and the // rounds
+        return(num+sum_digets(n/10)) #the num is the remainder of n/10 so it would get the 3, 2 and 1 of 123 but the answer is a bit off because the / does not round
 def product_digets(n):
     if n <10: #if n is less than ten than it would multiply by 0 and it would be 0
         return n
     else:
         num = math.remainder(n,10)
-        return(num*product_digets(n//10))
+        return(num*product_digets(n/10))
 
     
 
