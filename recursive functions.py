@@ -28,7 +28,16 @@ def product_digets(n):
     else:
         num = math.remainder(n,10)
         return(num*product_digets(n/10))
-
+def two_whole(n,x):
+    if n==0 or x==0:
+        return 0 
+    else:
+        return(x*n)
+def sum_range(s,l):
+    if s >= (l-1): #l-1 because then it will include l is in the range even though it shouldn't be included, just gets what is between the who numbers
+        return 0 
+    else:
+        return((s+1)+sum_range(s+1,l))
     
 
 
@@ -39,4 +48,6 @@ def main():
     print(fibonacci(8))
     print(sum_digets(123))
     print(product_digets(234))
+    print(two_whole(6,8))
+    print(sum_range(3,8))
 main()
