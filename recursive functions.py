@@ -38,6 +38,18 @@ def sum_range(s,l):
         return 0 
     else:
         return((s+1)+sum_range(s+1,l))
+def flip(n):
+    if n<10:
+        return n
+    else:
+        num = math.remainder(n,10)
+        return(f'{num},{flip(n/10)}')#off because of rounding
+def eculidean(a,b):
+    r = math.remainder(a,b)
+    if r==0:
+        return b
+    else:
+        return(eculidean(b,r))
     
 
 
@@ -50,4 +62,7 @@ def main():
     print(product_digets(234))
     print(two_whole(6,8))
     print(sum_range(3,8))
+    print(flip(123))
+    print(eculidean(270,192))
+
 main()
