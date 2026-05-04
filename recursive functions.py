@@ -1,6 +1,5 @@
 #recursive functions
 import math
-
 def factorial(n):
     if n <= 1:
         return 1
@@ -50,9 +49,14 @@ def eculidean(a,b):
         return b
     else:
         return(eculidean(b,r))
-    
-
-
+def compound_interest(p,r,n,t):
+    if n==0:
+        return 0
+    else:
+        power = n*t
+        base = 1 +(r/n)
+        together = base**power
+        return(p*together)
 
 def main():
     print(factorial(5))
@@ -64,5 +68,9 @@ def main():
     print(sum_range(3,8))
     print(flip(123))
     print(eculidean(270,192))
-
+    #p = initial amount
+    #r = annual rate(decimal)
+    # n = coumpounding frequency (how many times a year its compounded)
+    # t = time
+    print(compound_interest(10000.0,0.3875,12.0,7.5))
 main()
