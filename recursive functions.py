@@ -10,6 +10,11 @@ def summation(n):
         return 1
     else:
         return(n + summation(n-1))
+def exponential(a,b,x):
+    if x==0:
+        return a
+    else:
+        return(a*(b**x))
 def fibonacci(n):
     if n<=2:
         return 1
@@ -20,13 +25,13 @@ def sum_digets(n):
         return 0
     else:
         num = math.remainder(n,10)
-        return(num+sum_digets(n/10)) #the num is the remainder of n/10 so it would get the 3, 2 and 1 of 123 but the answer is a bit off because the / does not round
+        return(num+sum_digets(n//10)) #the num is the remainder of n/10 so it would get the 3, 2 and 1 of 123 but the answer is a bit off because the / does not round
 def product_digets(n):
     if n <10: #if n is less than ten than it would multiply by 0 and it would be 0
         return n
     else:
         num = math.remainder(n,10)
-        return(num*product_digets(n/10))
+        return(num*product_digets(n//10))
 def two_whole(n,x):
     if n==0 or x==0:
         return 0 
@@ -42,7 +47,7 @@ def flip(n):
         return n
     else:
         num = math.remainder(n,10)
-        return(f'{num},{flip(n/10)}')#off because of rounding
+        return(f'{num},{flip(n//10)}')#off because of rounding
 def eculidean(a,b):
     r = math.remainder(a,b)
     if r==0:
@@ -51,16 +56,15 @@ def eculidean(a,b):
         return(eculidean(b,r))
 def compound_interest(p,r,n,t):
     if n==0:
-        return 0
+        return
     else:
-        power = n*t
-        base = 1 +(r/n)
-        together = base**power
-        return(p*together)
+        return(p*((1+(r/n))**(n*t)))
+        
 
 def main():
     print(factorial(5))
     print(summation(5))
+    print(exponential(3,2,4))
     print(fibonacci(8))
     print(sum_digets(123))
     print(product_digets(234))
@@ -72,5 +76,5 @@ def main():
     #r = annual rate(decimal)
     # n = coumpounding frequency (how many times a year its compounded)
     # t = time
-    print(compound_interest(10000.0,0.3875,12.0,7.5))
+    print(compound_interest(10000.0,0.25,12.0,7))
 main()
