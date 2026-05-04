@@ -38,7 +38,7 @@ def two_whole(n,x):
     else:
         return(x*n)
 def sum_range(s,l):
-    if s >= (l-1): #l-1 because then it will include l is in the range even though it shouldn't be included, just gets what is between the who numbers
+    if s >= (l-1): 
         return 0 
     else:
         return((s+1)+sum_range(s+1,l))
@@ -47,7 +47,7 @@ def flip(n):
         return n
     else:
         num = math.remainder(n,10)
-        return(f'{num},{flip(n//10)}')#off because of rounding
+        return(f'{num},{flip(n//10)}')
 def eculidean(a,b):
     r = math.remainder(a,b)
     if r==0:
