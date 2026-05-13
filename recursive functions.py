@@ -4,10 +4,20 @@
 #sources: google(i had to look up how to round, how to use powers, how to find remainders, what eculidian is, what fibonacci is, ect)
 import math
 def factorial(n):
+    '''description: multiples group of numbers together if put in factorial 4 then it is 4*3*2*1
+    args:
+        n: any number greater than 1
+    returns:
+        the factorial of n'''
     if n <= 1:
         return 1
     return( n * factorial(n-1))
 def summation(n):
+    '''description: finds the summation of a number, it adds all the numbers below it ex: summation 4 is 4+3+2+1
+    args:
+        n is a number 
+    returns:
+        the summation of n'''
     if n <= 1:
         return 1
     return(n + summation(n-1))
@@ -21,6 +31,11 @@ def exponential(a,b,x):
         return a
     return(b*exponential(a,b,x-1))
 def fibonacci(n):
+    '''description: put in a number and find which fibonacci number it is
+    args:
+        n is which number in the sequence it wants
+    returns:
+        a fibbonacci number that is n number in the sequence'''
     if n<=2:
         return 1
     return(fibonacci(n-1)+fibonacci(n-2))
@@ -45,14 +60,14 @@ def product_digets(n):
     num = math.remainder(n,10)
     return(num*product_digets(n//10))
 def two_whole(n,x):
-    '''description: finds the product of two whole numbers (does not use recursive)
+    '''description: finds the product of two whole numbers by adding them certain amount of times (6 groups of 8)
     args:
         n,x: two whole numbers
     returns:
         the product of the two numbers'''
     if n==0 or x==0:
         return 0 
-    return(x*n)
+    return(x+two_whole(n-1,x))
 def sum_range(s,l):
     '''description: finds the sum of numbers between s and l
     args:
@@ -64,6 +79,11 @@ def sum_range(s,l):
         return 0 
     return((s+1)+sum_range(s+1,l))
 def flip(n):
+    '''description: it flips a numbers digits around by getting the ones digit then the tens and priting them in another order
+    args:
+        n: the number they want flipped
+    returns:
+        the number flipped around'''
     if n<10:
         return n
     num = math.remainder(n,10)
@@ -75,12 +95,14 @@ def eculidean(a,b):
         b: a number that is smaller than a
     returns:
         the greatest common divisor between a and b'''
+    if b>a:
+        eculidean(b,a)
     r = math.remainder(a,b)
     if r==0:
         return b
     return(eculidean(b,r))
 def compound_interest(p,r,n,t):
-    '''Description: returns the the amount of money they will have after compound interest if when the user puts in the amount
+    '''Description: returns the the amount of money they will have after compound interest if when the user puts in the amount and it rounds to 2 decimal places
         (this function does not use recursive functions)
     args:
         p = initial amount
@@ -93,10 +115,7 @@ def compound_interest(p,r,n,t):
     if  t==0 or n==0:
         return p
     return(round(exponential(p,(1+(r/n)),(n*t)),2))
-        #return(round((p*((1+(r/n))**(n*t))),3)) #rounds to 2 decimal places
     
-        
-
 def main():
     print(factorial(5))
     print(summation(5))
