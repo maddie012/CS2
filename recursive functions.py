@@ -115,7 +115,17 @@ def compound_interest(p,r,n,t):
     if  t==0 or n==0:
         return p
     return(round(exponential(p,(1+(r/n)),(n*t)),2))
-    
+def bisection(min,max,n):
+    e = .05
+    y = (min+max)/2
+    if abs(y**2 - n)<=e:
+        return y
+    elif y**2 > n:
+        return bisection(min, y, n)
+    elif y**2 < n:
+        return bisection(y,max,n)
+    return(min+max)/2
+
 def main():
     print(factorial(5))
     print(summation(5))
@@ -128,4 +138,5 @@ def main():
     print(flip(123))
     print(eculidean(270,192))
     print(compound_interest(10000,0.25,12,7))
+    print(bisection(0,9,9))
 main()
