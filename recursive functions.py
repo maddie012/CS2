@@ -1,7 +1,7 @@
 #recursive functions
 #Author: Madeleine Elias
 #description: has a bunch of recursive functions
-#sources: google(i had to look up how to round, how to use powers, how to find remainders, what eculidian is, what fibonacci is, ect)
+#sources: google(i had to look up how to round, how to use powers, how to find remainders, what eculidian is, what fibonacci is, bisection, ect)
 import math
 def factorial(n):
     '''description: multiples group of numbers together if put in factorial 4 then it is 4*3*2*1
@@ -103,7 +103,7 @@ def eculidean(a,b):
     return(eculidean(b,r))
 def compound_interest(p,r,n,t):
     '''Description: returns the the amount of money they will have after compound interest if when the user puts in the amount and it rounds to 2 decimal places
-        (this function does not use recursive functions)
+        (this function uses another function that uses recursion)
     args:
         p = initial amount
         r = annual rate(decimal)
@@ -116,6 +116,13 @@ def compound_interest(p,r,n,t):
         return p
     return(round(exponential(p,(1+(r/n)),(n*t)),2))
 def bisection(min,max,n):
+    '''description: finds the square root of a number using the minimum and maximum and seeing where it is betwen them
+    args:
+        min: this is 0 because a minimum cannot be smaller
+        max: this is the same as what it is trying to find the square root of b/c it is the maximum
+        n: what the function is trying to find the square root of
+    returns:
+        it returns the square root but there is an error of .05 so it can be up to that amount off'''
     e = .05
     y = (min+max)/2
     if abs(y**2 - n)<=e:
