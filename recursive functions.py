@@ -87,7 +87,8 @@ def flip(n):
     if n<10:
         return n
     num = math.remainder(n,10)
-    return(f'{num},{flip(n//10)}')
+    num = int(num)
+    return(f'{num}{flip(n//10)}')
 def eculidean(a,b):
     '''Description: finds the greatest common divisor between a and b
     args:
