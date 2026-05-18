@@ -11,7 +11,7 @@ def factorial(n):
         the factorial of n'''
     if n <= 1:
         return 1
-    return( n * factorial(n-1))
+    return(n*factorial(n-1))
 def summation(n):
     '''description: finds the summation of a number, it adds all the numbers below it ex: summation 4 is 4+3+2+1
     args:
@@ -20,7 +20,7 @@ def summation(n):
         the summation of n'''
     if n <= 1:
         return 1
-    return(n + summation(n-1))
+    return(n+summation(n-1))
 def exponential(a,b,x):
     '''decriptions: it finds the exponential of a certian value, it uses b and multiples it by a recursive wth x-1 so it will keep multipling until x is 0
     args:
